@@ -34,6 +34,7 @@
 
 typedef struct {
     GLKVector3  positionCoords;
+    GLKVector2  textureCoords;
 } SceneVertex;
 
 
@@ -42,13 +43,13 @@ typedef struct {
 @property (strong, nonatomic) GLKBaseEffect *baseEffect;
 @property (strong, nonatomic) AGLKVertexAttribArrayBuffer *vertexBuffer;
 @property (assign, nonatomic) GLfloat sCoordinateOffset;
-
+@property (assign, nonatomic) GLfloat step;
 @end
 
 
 @implementation OpenGLES_Ch3_3ViewController
 
-static SceneVertex vertices[360];
+static SceneVertex vertices[361];
 //{
 //    {{-0.5f, -0.5f, 0.0f}}, // lower left corner
 //    {{ 0.5f, -0.5f, 0.0f}}, // lower right corner
@@ -57,54 +58,35 @@ static SceneVertex vertices[360];
 
 - (void)updateAnimatedVertexPositions
 {
+    if (vertices[0].positionCoords.y> 1) {
+        self.step = -0.02;
+    }
     
-    //    int    i;  // by convention, 'i' is current vertex index
-    //
-    //    for(i = 0; i < 3; i++)
-    //    {
-    //        vertices[i].positionCoords.x += movementVectors[i].x;
-    //        if(vertices[i].positionCoords.x >= 1.0f ||
-    //           vertices[i].positionCoords.x <= -1.0f)
-    //        {
-    //            movementVectors[i].x = -movementVectors[i].x;
-    //        }
-    //        vertices[i].positionCoords.y += movementVectors[i].y;
-    //        if(vertices[i].positionCoords.y >= 1.0f ||
-    //           vertices[i].positionCoords.y <= -1.0f)
-    //        {
-    //            movementVectors[i].y = -movementVectors[i].y;
-    //        }
-    //        vertices[i].positionCoords.z += movementVectors[i].z;
-    //        if(vertices[i].positionCoords.z >= 1.0f ||
-    //           vertices[i].positionCoords.z <= -1.0f)
-    //        {
-    //            movementVectors[i].z = -movementVectors[i].z;
-    //        }
-    //    }
-    //
-    //    int    index;
-    //    for(index = 0; index < 3; index++)
-    //    {
-    //        vertices[index].textureCoords.s =
-    //        (defaultVertices[index].textureCoords.s +
-    //         self.sCoordinateOffset);
-    //    }
+    if (vertices[0].positionCoords.y < -1) {
+        self.step = 0.02;
+    }
+    
+    vertices[0].positionCoords.y += self.step;
+ 
+    for (int i = 1; i < 361; i += 1) {
+        vertices[i].positionCoords.y += self.step;
+    }
 }
 
-//- (void)update
-//{
-//    [self updateAnimatedVertexPositions];
-//
-//    [self.vertexBuffer reinitWithAttribStride:sizeof(SceneVertex)
-//                             numberOfVertices:sizeof(vertices) / sizeof(SceneVertex)
-//                                        bytes:vertices];
-//}
+- (void)update
+{
+    [self updateAnimatedVertexPositions];
+    [self.vertexBuffer reinitWithAttribStride:sizeof(SceneVertex)
+                             numberOfVertices:sizeof(vertices) / sizeof(SceneVertex)
+                                        bytes:vertices];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.preferredFramesPerSecond = 24;
+    self.step = 0.02;
     
     GLKView *view = (GLKView *)self.view;
     view.context = [[AGLKContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
@@ -112,13 +94,15 @@ static SceneVertex vertices[360];
     
     self.baseEffect = [GLKBaseEffect new];
     self.baseEffect.useConstantColor = GL_TRUE;
-    self.baseEffect.constantColor = GLKVector4Make(1, 0.5, 1, 1);
+    self.baseEffect.constantColor = GLKVector4Make(1, 1, 1, 1);
     
     ((AGLKContext *)view.context).clearColor = GLKVector4Make(1, 1, 1, 1.0f);
     
     float scale = [UIScreen mainScreen].bounds.size.width / [UIScreen mainScreen].bounds.size.height;
-    for (int i = 0; i < 360; i += 1) {
-        SceneVertex tmp = {{sin(DEGREES_TO_RADIANS(i)) * 0.2, cos(DEGREES_TO_RADIANS(i)) * scale * 0.2, 0}};
+    for (int i = 0; i < 361; i += 1) {
+        float X = sin(DEGREES_TO_RADIANS(i));
+        float Y = cos(DEGREES_TO_RADIANS(i));
+        SceneVertex tmp = {{X * 0.2, Y * 0.2, 0}, {(X + 1) / 2, 1 - (Y + 1) / 2}};
         vertices[i] = tmp;
     }
     
@@ -128,15 +112,15 @@ static SceneVertex vertices[360];
                          numberOfVertices:sizeof(vertices) / sizeof(SceneVertex)
                          bytes:vertices
                          usage:GL_DYNAMIC_DRAW];
-    //    // Setup texture
-    //    CGImageRef imageRef = [[UIImage imageNamed:@"grid.png"] CGImage];
-    //    GLKTextureInfo *textureInfo = [GLKTextureLoader
-    //                                   textureWithCGImage:imageRef
-    //                                   options:nil
-    //                                   error:NULL];
-    //
-    //    self.baseEffect.texture2d0.name = textureInfo.name;
-    //    self.baseEffect.texture2d0.target = textureInfo.target;
+    // Setup texture
+    CGImageRef imageRef = [[UIImage imageNamed:@"boy-512.png"] CGImage];
+    GLKTextureInfo *textureInfo = [GLKTextureLoader
+                                   textureWithCGImage:imageRef
+                                   options:nil
+                                   error:NULL];
+    
+    self.baseEffect.texture2d0.name = textureInfo.name;
+    self.baseEffect.texture2d0.target = textureInfo.target;
 }
 
 
@@ -153,16 +137,14 @@ static SceneVertex vertices[360];
                                   attribOffset:offsetof(SceneVertex, positionCoords)
                                   shouldEnable:YES];
     
-    //    [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribTexCoord0
-    //                           numberOfCoordinates:2
-    //                                  attribOffset:offsetof(SceneVertex, textureCoords)
-    //                                  shouldEnable:YES];
+    [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribTexCoord0
+                           numberOfCoordinates:2
+                                  attribOffset:offsetof(SceneVertex, textureCoords)
+                                  shouldEnable:YES];
     
-    [self.vertexBuffer drawArrayWithMode:GL_LINE_STRIP
+    [self.vertexBuffer drawArrayWithMode:GL_TRIANGLE_FAN
                         startVertexIndex:0
                         numberOfVertices:sizeof(vertices) / sizeof(SceneVertex)];
-    
-    
 }
 
 
