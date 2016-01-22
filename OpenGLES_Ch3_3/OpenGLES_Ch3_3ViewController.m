@@ -6,6 +6,7 @@
 #import "OpenGLES_Ch3_3ViewController.h"
 #import "AGLKVertexAttribArrayBuffer.h"
 #import "AGLKContext.h"
+#import <CoreMotion/CoreMotion.h>
 
 #define DEGREES_TO_RADIANS(x) (M_PI * x / 180.0)
 #define RANDOM_FLOAT_BETWEEN(x, y) (((float) rand() / RAND_MAX) * (y - x) + x)
@@ -38,12 +39,17 @@ typedef struct {
 } SceneVertex;
 
 
-@interface OpenGLES_Ch3_3ViewController ()
+@interface OpenGLES_Ch3_3ViewController (){
+    CMAcceleration ar;
+    float fallT;
+    GLfloat stepX;
+    GLfloat stepY;
+}
 
 @property (strong, nonatomic) GLKBaseEffect *baseEffect;
 @property (strong, nonatomic) AGLKVertexAttribArrayBuffer *vertexBuffer;
 @property (assign, nonatomic) GLfloat sCoordinateOffset;
-@property (assign, nonatomic) GLfloat step;
+@property (strong, nonatomic) CMMotionManager *mManager;
 @end
 
 
@@ -58,18 +64,40 @@ static SceneVertex vertices[361];
 
 - (void)updateAnimatedVertexPositions
 {
-    if (vertices[0].positionCoords.y> 1) {
-        self.step = -0.02;
+    fallT ++;
+    float timeDur = fallT / self.preferredFramesPerSecond;
+    
+    if (ar.y < 0) {
+        stepY = -0.2 * 0.5 * 9.8 * (1 - ABS(ar.z)) * timeDur * timeDur;
+        if (vertices[180].positionCoords.y <= -1) {
+            stepY = -1 - vertices[180].positionCoords.y;
+            fallT = 0;
+        }
+    }else{
+        stepY = 0.2 * 0.5 * 9.8 * (1 - ABS(ar.z))  * timeDur * timeDur;
+        if (vertices[0].positionCoords.y >= 1) {
+            stepY = 1 - vertices[0].positionCoords.y;
+            fallT = 0;
+        }
     }
     
-    if (vertices[0].positionCoords.y < -1) {
-        self.step = 0.02;
+    if (ar.x > 0) {
+        stepX = 0.2 * 0.5 * 9.8 * ABS(ar.x) * timeDur * timeDur;
+        if (vertices[90].positionCoords.x >= 1) {
+            stepX = 1 - vertices[90].positionCoords.x;
+            fallT = 0;
+        }
+    }else{
+        stepX = -0.2 * 0.5 * 9.8 * ABS(ar.x) * timeDur * timeDur;
+        if (vertices[270].positionCoords.x <= -1) {
+            stepX = -1 - vertices[270].positionCoords.x;
+            fallT = 0;
+        }
     }
     
-    vertices[0].positionCoords.y += self.step;
- 
-    for (int i = 1; i < 361; i += 1) {
-        vertices[i].positionCoords.y += self.step;
+    for (int i = 0; i < 361; i += 1) {
+        vertices[i].positionCoords.x += stepX;
+        vertices[i].positionCoords.y += stepY;
     }
 }
 
@@ -84,9 +112,11 @@ static SceneVertex vertices[361];
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.mManager = [CMMotionManager new];
+    [self.mManager startAccelerometerUpdates];
+    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateAcceleraoMeter) userInfo:nil repeats:true];
     
     self.preferredFramesPerSecond = 24;
-    self.step = 0.02;
     
     GLKView *view = (GLKView *)self.view;
     view.context = [[AGLKContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
@@ -123,6 +153,10 @@ static SceneVertex vertices[361];
     self.baseEffect.texture2d0.target = textureInfo.target;
 }
 
+- (void)updateAcceleraoMeter{
+    CMAccelerometerData *data = self.mManager.accelerometerData;
+    ar = data.acceleration;
+}
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
@@ -130,7 +164,6 @@ static SceneVertex vertices[361];
     
     // Clear back frame buffer (erase previous drawing)
     [(AGLKContext *)view.context clear:GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT];
-    
     
     [self.vertexBuffer prepareToDrawWithAttrib:GLKVertexAttribPosition
                            numberOfCoordinates:3

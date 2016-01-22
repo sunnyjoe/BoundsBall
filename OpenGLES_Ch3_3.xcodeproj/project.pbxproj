@@ -19,6 +19,7 @@
 		03AF4F6D13F0DF1700639415 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AF4F6A13F0DF1700639415 /* OpenGLES.framework */; };
 		03AF4F6E13F0DF1700639415 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AF4F6B13F0DF1700639415 /* QuartzCore.framework */; };
 		03AF4F6F13F0DF1700639415 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AF4F6C13F0DF1700639415 /* GLKit.framework */; };
+		6D0575C51C51E366008211E4 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D0575C41C51E366008211E4 /* CoreMotion.framework */; };
 		6D9440F31C50E1A500EBA03D /* boy-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D9440F21C50E1A500EBA03D /* boy-512.png */; };
 		6DEFB60B1C507F4C00D326EB /* AGLKContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEFB6081C507F4C00D326EB /* AGLKContext.m */; };
 		6DEFB60C1C507F4C00D326EB /* AGLKVertexAttribArrayBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEFB60A1C507F4C00D326EB /* AGLKVertexAttribArrayBuffer.m */; };
@@ -46,6 +47,7 @@
 		03AF4F6A13F0DF1700639415 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		03AF4F6B13F0DF1700639415 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		03AF4F6C13F0DF1700639415 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		6D0575C41C51E366008211E4 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		6D9440F21C50E1A500EBA03D /* boy-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "boy-512.png"; sourceTree = "<group>"; };
 		6DEFB6071C507F4C00D326EB /* AGLKContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGLKContext.h; sourceTree = "<group>"; };
 		6DEFB6081C507F4C00D326EB /* AGLKContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGLKContext.m; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D0575C51C51E366008211E4 /* CoreMotion.framework in Frameworks */,
 				03AF4F4113F0D90D00639415 /* UIKit.framework in Frameworks */,
 				03AF4F4313F0D90D00639415 /* Foundation.framework in Frameworks */,
 				03AF4F6D13F0DF1700639415 /* OpenGLES.framework in Frameworks */,
@@ -93,6 +96,7 @@
 		03AF4F3F13F0D90D00639415 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6D0575C41C51E366008211E4 /* CoreMotion.framework */,
 				03AF4F6A13F0DF1700639415 /* OpenGLES.framework */,
 				03AF4F6B13F0DF1700639415 /* QuartzCore.framework */,
 				03AF4F6C13F0DF1700639415 /* GLKit.framework */,
@@ -297,6 +301,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenGLES_Ch3_3/OpenGLES_Ch3_3-Prefix.pch";
 				INFOPLIST_FILE = "OpenGLES_Ch3_3/OpenGLES_Ch3_3-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -308,6 +313,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenGLES_Ch3_3/OpenGLES_Ch3_3-Prefix.pch";
 				INFOPLIST_FILE = "OpenGLES_Ch3_3/OpenGLES_Ch3_3-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
