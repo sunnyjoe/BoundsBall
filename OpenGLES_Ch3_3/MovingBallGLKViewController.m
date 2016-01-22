@@ -45,6 +45,7 @@ typedef struct {
     GLfloat stepX;
     GLfloat stepY;
 }
+@property (weak, nonatomic) IBOutlet UIButton *closeBtn;
 
 @property (strong, nonatomic) GLKBaseEffect *baseEffect;
 @property (strong, nonatomic) AGLKVertexAttribArrayBuffer *vertexBuffer;
@@ -61,6 +62,9 @@ static SceneVertex vertices[361];
 //    {{ 0.5f, -0.5f, 0.0f}}, // lower right corner
 //    {{-0.5f,  0.5f, 0.0f}}, // upper left corner
 //};
+- (IBAction)closeBtnDidTapped:(id)sender {
+    [self dismissViewControllerAnimated:true completion:nil];
+}
 
 - (void)updateAnimatedVertexPositions
 {
