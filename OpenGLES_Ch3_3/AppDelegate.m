@@ -3,9 +3,9 @@
 //  OpenGLES_Ch3_3
 //
 
-#import "OpenGLES_Ch3_3AppDelegate.h"
+#import "AppDelegate.h"
 
-@implementation OpenGLES_Ch3_3AppDelegate
+@implementation AppDelegate
 
 @synthesize window = _window;
 

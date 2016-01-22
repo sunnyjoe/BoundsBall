@@ -5,7 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OpenGLES_Ch3_3AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

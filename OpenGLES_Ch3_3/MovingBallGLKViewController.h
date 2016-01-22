@@ -8,6 +8,6 @@
 @class AGLKVertexAttribArrayBuffer;
 
 
-@interface OpenGLES_Ch3_3ViewController : GLKViewController
+@interface MovingBallGLKViewController : GLKViewController
  
 @end

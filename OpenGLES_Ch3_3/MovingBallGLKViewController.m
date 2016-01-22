@@ -3,7 +3,7 @@
 //  OpenGLES_Ch3_3
 //
 
-#import "OpenGLES_Ch3_3ViewController.h"
+#import "MovingBallGLKViewController.h"
 #import "AGLKVertexAttribArrayBuffer.h"
 #import "AGLKContext.h"
 #import <CoreMotion/CoreMotion.h>
@@ -39,7 +39,7 @@ typedef struct {
 } SceneVertex;
 
 
-@interface OpenGLES_Ch3_3ViewController (){
+@interface MovingBallGLKViewController (){
     CMAcceleration ar;
     float fallT;
     GLfloat stepX;
@@ -53,7 +53,7 @@ typedef struct {
 @end
 
 
-@implementation OpenGLES_Ch3_3ViewController
+@implementation MovingBallGLKViewController
 
 static SceneVertex vertices[361];
 //{
@@ -128,7 +128,6 @@ static SceneVertex vertices[361];
     
     ((AGLKContext *)view.context).clearColor = GLKVector4Make(1, 1, 1, 1.0f);
     
-    float scale = [UIScreen mainScreen].bounds.size.width / [UIScreen mainScreen].bounds.size.height;
     for (int i = 0; i < 361; i += 1) {
         float X = sin(DEGREES_TO_RADIANS(i));
         float Y = cos(DEGREES_TO_RADIANS(i));
