@@ -31,7 +31,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="340" y="283"/>
+            <point key="canvasLocation" x="258" y="-87"/>
         </scene>
         <!--Simple Learn-->
         <scene sceneID="fzp-2Y-VLA">
@@ -84,6 +84,26 @@
                                             <segue destination="Ack-Va-fSa" kind="modal" trigger="accessoryAction" modalPresentationStyle="fullScreen" id="OGj-1y-X91"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" textLabel="P7N-oe-Sep" style="IBUITableViewCellStyleDefault" id="KnJ-Ho-3aQ">
+                                        <rect key="frame" x="0.0" y="152" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KnJ-Ho-3aQ" id="cxq-8y-faD">
+                                            <rect key="frame" x="0.0" y="0.0" width="253" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="UseModel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="P7N-oe-Sep" userLabel="Simple Sphere">
+                                                    <rect key="frame" x="15" y="0.0" width="238" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="rkK-Ag-7vT" kind="modal" trigger="accessoryAction" id="VoK-Bj-tKW"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -97,6 +117,20 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TvJ-Sd-y8J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-197" y="425"/>
+        </scene>
+        <!--Use ModelGLK View Controller-->
+        <scene sceneID="Q5I-qz-T6d">
+            <objects>
+                <viewController id="rkK-Ag-7vT" customClass="UseModelGLKViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="F79-bw-2pr" customClass="GLKView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HPt-Ce-IE0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="221" y="818"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="utd-RZ-DgU">
@@ -142,7 +176,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LTi-CW-kQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="339.5" y="846.5"/>
+            <point key="canvasLocation" x="647.5" y="40.5"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
